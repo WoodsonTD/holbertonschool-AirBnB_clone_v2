@@ -125,18 +125,21 @@ class HBNBCommand(cmd.Cmd):
         return
 
     kwargs = {}
-    for arg in args[1:]:
-        try:
-            key, value = arg.split("=")
-            if value.startswith('"') and value.endswith('"'):
-                value = value[1:-1].replace('_', ' ').replace('\\"', '"')
-            elif '.' in value:
-                value = float(value)
+    for param in range(1, len(args)):
+        ky, v1 = args[param].split("=")
+        if v1[0] == '"':
+               vl = vl.replace('_', ' ').strip('"')
             else:
-                value = int(value)
-            kwargs[key] = value
-        except:
-            pass
+                try:
+                    vl = eval(vl)
+                except (SyntaxError, NameError):
+                    continue
+            kwargs[ky] = vl
+        if len(kwargs) == 0:
+            obj = eval(args[0])()
+        else:
+            obj = eval(args[0])(**kwargs)
+        print(obj.  
 
     def help_create(self):
         """ Help information for the create method """
