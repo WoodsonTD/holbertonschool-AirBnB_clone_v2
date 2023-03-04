@@ -120,26 +120,27 @@ class HBNBCommand(cmd.Cmd):
         print("** class name missing **")
         return
     class_name = args[0]
-    if not class_name in classes:
+    if not class_name not in classes:
         print("** class doesn't exist **")
         return
 
     kwargs = {}
     for param in range(1, len(args)):
-        ky, v1 = args[param].split("=")
+        ky, vl = args[param].split("=")
         if v1[0] == '"':
-               vl = vl.replace('_', ' ').strip('"')
-            else:
-                try:
-                    vl = eval(vl)
-                except (SyntaxError, NameError):
-                    continue
-            kwargs[ky] = vl
-        if len(kwargs) == 0:
-            obj = eval(args[0])()
+            vl = vl.replace('_', ' ').strip('"')
         else:
-            obj = eval(args[0])(**kwargs)
-        print(obj.  
+            try
+        vl = eval(vl)
+        except (SyntaxError, NameError):
+            continue
+
+    kwargs[ky] = vl
+    if len(kwargs) == 0:
+        obj = eval(args[0])()
+    else:
+        obj = eval(args[0])(**kwargs)
+    print(obj)
 
     def help_create(self):
         """ Help information for the create method """
@@ -334,6 +335,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
