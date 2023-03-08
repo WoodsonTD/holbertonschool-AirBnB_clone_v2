@@ -115,7 +115,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, line):
         """Usage: create <Class name> <param 1> <param 2> <param 3>..."""
-         if not line:
+        if not line:
             print("** class name missing **")
             return
         args = line.split()
