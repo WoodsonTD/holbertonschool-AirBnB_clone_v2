@@ -6,19 +6,19 @@ from flask import Flask
 app = Flask(__name__)
 
 
-@app.route('/', strict_slashes=False)
+@app.route("/", strict_slashes=False)
 def hello_route():
     """function that displays Hello HBNB"""
     return("Hello HBNB!")
 
 
-@app.route('/hbnb', strict_slashes=False)
+@app.route("/hbnb", strict_slashes=False)
 def hello_route_v1():
     """function that displays HBNB"""
     return("HBNB")
 
 
-@app.route('/c/<text>', stict_slashes=False)
+@app.route("/c/<text>", stict_slashes=False)
 def hello_route_v2(text):
     """function that displays "C" followed by the valuse of the text"""
     return 'C ' + text.replace('_', ' ')
