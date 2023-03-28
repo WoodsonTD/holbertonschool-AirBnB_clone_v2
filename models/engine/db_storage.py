@@ -59,3 +59,7 @@ class DBStorage:
 
     def total(self):
         return len(self.__session.query(Review).all())
+
+    def close(self):
+        """call remove() method on the private session attribute"""
+        self.__session.remove()
