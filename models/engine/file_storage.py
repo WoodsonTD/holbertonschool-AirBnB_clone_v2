@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
 import json
+from models import city, place, review, state, amenity, user, base_model
 
 
 class FileStorage:
@@ -8,12 +9,21 @@ class FileStorage:
     __file_path = 'file.json'
     __objects = {}
 
+    classes = {
+        'City': city.City,
+        'Place': place.Place,
+        'Review': review.Review,
+        'State': state.State,
+        'Amenity': amenity.Amenity,
+        'User': user.User
+    }
+
     def all(self, cls=None):
-        """Returns a dictionary of models currently in storage
-        if cls specified, only returns that class"""
+        """Returns a dictionary of models currently in storage if cls
+        specified, only returns that class"""
         if cls is not None:
-            if type(cls) is str:
-                cls = eval(cls)
+            if cls in self.classes.keys():
+                cls = self.classes.get(cls)
             spec_rich = {}
             for ky, vl in self.__objects.items():
                 if cls == type(vl):
@@ -45,10 +55,13 @@ class FileStorage:
         from models.review import Review
 
         classes = {
-                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
-                    'State': State, 'City': City, 'Amenity': Amenity,
-                    'Review': Review
-                  }
+            'City': city.City,
+            'Place': place.Place,
+            'Review': review.Review,
+            'State': state.State,
+            'Amenity': amenity.Amenity,
+            'User': user.User
+        }
         try:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
@@ -59,13 +72,13 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """if obj deletes obj from __objects"""
-        try:
-            key = obj.__class__.__name__ + "." + obj.id
-            del self.__objects[key]
-        except (AttributeError, KeyError):
-            pass
+        """deletes an obj from __objects if it's inside"""
+        if obj is not None:
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            if key in self.__objects:
+                del self.__objects[key]
+                self.save()
 
     def close(self):
-        """call reload() method for deserializing the JSON file to objects"""
+        """Deserializes the JSON file to objects"""
         self.reload()
