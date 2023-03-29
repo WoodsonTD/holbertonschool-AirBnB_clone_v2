@@ -20,7 +20,7 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             """ Getter instance method """
-            all_cities = storage.all(City)
+            all_cities = models.storage.all("City")
             city_list = []
 
             for city in all_cities.values():
