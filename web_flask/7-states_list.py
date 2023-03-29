@@ -2,12 +2,13 @@
 """ Script that starts a Flask web application """
 from flask import Flask, render_template
 from models import storage
+from models.state import State
 
 
 app = Flask(__name__)
 
 
-@app.route('/states_lis', strict_slashes=False)
+@app.route('/states_list', strict_slashes=False)
 def states_list():
     """ State list """
     states = storage.all("State")
@@ -16,7 +17,7 @@ def states_list():
 
 
 @app.teardown_appcontext
-def teardown(exception):
+def teardown_db(exception):
     """ Method to handle """
     storage.close()
 
