@@ -6,11 +6,6 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 
-@app.route('/number_template/<int:n>', methods=['GET'], strict_slashes=False)
-def displaytemplate(n):
-    return render_template('5-number.html', n=n)
-
-
 @app.route('/', methods=['GET'], strict_slashes=False)
 def hello_hbnb():
     return "Hello HBNB!"
@@ -36,6 +31,11 @@ def displayPython(text):
 @app.route('/number/<int:n>', methods=['GET'], strict_slashes=False)
 def nisnumber(n):
     return "{} is a number".format(n)
+
+
+@app.route('/number_template/<int:n>', methods=['GET'], strict_slashes=False)
+def displaytemplate(n):
+    return render_template('5-number.html', n=n)
 
 
 if __name__ == '__main__':
